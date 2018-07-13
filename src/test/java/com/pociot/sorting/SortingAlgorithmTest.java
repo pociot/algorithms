@@ -55,4 +55,10 @@ public class SortingAlgorithmTest {
         SortingAlgorithm sortingAlgorithm = new ShellSort();
         Assert.assertArrayEquals(sortedTable, sortingAlgorithm.sort(table));
     }
+
+    @Test
+    public void combSortTest() {
+        SortingAlgorithm sortingAlgorithm = new CombSort();
+        Assert.assertArrayEquals(sortedTable, sortingAlgorithm.sort(table));
+    }
 }
