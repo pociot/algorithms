@@ -43,4 +43,10 @@ public class SortingAlgorithmTest {
         SortingAlgorithm sortingAlgorithm = new QuickSort();
         Assert.assertArrayEquals(sortedTable, sortingAlgorithm.sort(table));
     }
+
+    @Test
+    public void bubbleSortTest() {
+        SortingAlgorithm sortingAlgorithm = new BubbleSort();
+        Assert.assertArrayEquals(sortedTable, sortingAlgorithm.sort(table));
+    }
 }
