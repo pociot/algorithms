@@ -37,4 +37,10 @@ public class SortingAlgorithmTest {
         SortingAlgorithm sortingAlgorithm = new HeapSort();
         Assert.assertArrayEquals(sortedTable, sortingAlgorithm.sort(table));
     }
+
+    @Test
+    public void quickSortTest() {
+        SortingAlgorithm sortingAlgorithm = new QuickSort();
+        Assert.assertArrayEquals(sortedTable, sortingAlgorithm.sort(table));
+    }
 }
