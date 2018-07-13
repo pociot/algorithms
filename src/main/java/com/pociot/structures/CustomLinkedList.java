@@ -8,10 +8,6 @@ public class CustomLinkedList<T> {
     this.first = null;
   }
 
-  public boolean isEmpty() {
-    return first == null;
-  }
-
   public void insert(T object) {
     Link<T> link = new Link<>(object);
     link.next = first;

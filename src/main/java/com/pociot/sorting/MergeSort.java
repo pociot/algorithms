@@ -1,7 +1,6 @@
 package com.pociot.sorting;
 
-import java.util.Arrays;
-import org.apache.commons.lang3.ArrayUtils;
+import java.lang.reflect.Array;
 
 public class MergeSort extends SortingAlgorithm {
 
@@ -11,14 +10,14 @@ public class MergeSort extends SortingAlgorithm {
     if (n <= 1)
       return array;
 
-    T[] left = (T[]) new Number[0];
-    T[] right = (T[]) new Number[0];
+    @SuppressWarnings("unchecked") T[] left = (T[]) Array.newInstance(array.getClass().getComponentType(), 0);
+    @SuppressWarnings("unchecked") T[] right = (T[]) Array.newInstance(array.getClass().getComponentType(), 0);
 
     for (int i = 0; i < n; i++) {
       if (i < (n / 2))
-        left = ArrayUtils.add(left, array[i]);
+        left = add(left, array[i]);
       else
-        right = ArrayUtils.add(right, array[i]);
+        right = add(right, array[i]);
     }
     left = sort(left);
     right = sort(right);
@@ -27,28 +26,66 @@ public class MergeSort extends SortingAlgorithm {
   }
 
   private <T extends Number & Comparable<? super T>>T[] merge(T[] left, T[] right) {
-    T[] tempLeft = Arrays.copyOf(left, left.length);
-    T[] tempRight = Arrays.copyOf(right, right.length);
-    T[] result = (T[]) new Number[0];
+    T[] tempLeft = arrayCopyOf(left, left.length);
+    T[] tempRight = arrayCopyOf(right, right.length);
+    @SuppressWarnings("unchecked") T[] result = (T[]) Array.newInstance(left.getClass().getComponentType(), 0);
     System.out.println();
-    while (!ArrayUtils.isEmpty(tempLeft) && !ArrayUtils.isEmpty(tempRight)) {
+    while (getLength(tempLeft) != 0 && getLength(tempRight) != 0) {
       if(tempLeft[0].compareTo(tempRight[0]) <= 0) {
-        result = ArrayUtils.add(result, tempLeft[0]);
-        tempLeft = ArrayUtils.remove(tempLeft, 0);
+        result = add(result, tempLeft[0]);
+        tempLeft = removeFirst(tempLeft);
       } else {
-        result = ArrayUtils.add(result, tempRight[0]);
-        tempRight = ArrayUtils.remove(tempRight, 0);
+        result = add(result, tempRight[0]);
+        tempRight = removeFirst(tempRight);
       }
     }
 
-    while (!ArrayUtils.isEmpty(tempLeft)) {
-      result = ArrayUtils.add(result, tempLeft[0]);
-      tempLeft = ArrayUtils.remove(tempLeft, 0);
+    while (getLength(tempLeft) != 0) {
+      result = add(result, tempLeft[0]);
+      tempLeft = removeFirst(tempLeft);
     }
-    while (!ArrayUtils.isEmpty(tempRight)) {
-      result = ArrayUtils.add(result, tempRight[0]);
-      tempRight = ArrayUtils.remove(tempRight, 0);
+    while (getLength(tempRight) != 0) {
+      result = add(result, tempRight[0]);
+      tempRight = removeFirst(tempRight);
     }
     return result;
+  }
+
+  private <T> T[] add(T[] array, T element) {
+    Object newArray = Array.newInstance(array.getClass().getComponentType(), array.length + 1);
+    //noinspection SuspiciousSystemArraycopy
+    System.arraycopy(array, 0, newArray, 0, array.length);
+    Array.set(newArray, getLength(newArray) - 1, element);
+    //noinspection unchecked
+    return (T[]) newArray;
+  }
+
+  private <T> T[] removeFirst(T[] array) {
+    return remove(array, 0);
+  }
+
+  @SuppressWarnings("SameParameterValue")
+  private <T> T[] remove(T[] array, int index) {
+    int length = array.length;
+    if (index >= 0 && index < length) {
+      @SuppressWarnings("unchecked") T[] result = (T[]) Array.newInstance(array.getClass().getComponentType(), length - 1);
+      System.arraycopy(array, 0, result, 0, index);
+      if (index < length - 1) {
+        System.arraycopy(array, index + 1, result, index, length - index - 1);
+      }
+      return result;
+    } else {
+      throw new IndexOutOfBoundsException("Index: " + index + ", Length: " + length);
+    }
+  }
+
+  private <T> T[] arrayCopyOf(T[] array, int length) {
+    @SuppressWarnings("unchecked") T[] result = (T[]) Array.newInstance(array.getClass().getComponentType(), length);
+    System.arraycopy(array, 0, result, 0, array.length);
+    return result;
+  }
+
+  private int getLength(Object array) {
+    return array == null ? 0: Array.getLength(array);
   }
 }
