@@ -1,32 +1,54 @@
 package com.pociot.structures;
 
+import com.sun.istack.internal.NotNull;
+import com.sun.istack.internal.Nullable;
+
 public class CustomLinkedList<T> {
 
-  private Link<T> first;
+  private Link<T> head;
 
   public CustomLinkedList() {
-    this.first = null;
+    this.head = null;
   }
 
-  public void insert(T object) {
+  public void push(T object) {
     Link<T> link = new Link<>(object);
-    link.next = first;
-    first = link;
+    link.setNext(head);
+    head = link;
+  }
+
+  public void append(T object) {
+    Link<T> link = new Link<>(object);
+    if (head == null) {
+      head = link;
+    } else {
+      Link<T> last = head;
+      while (last.getNext() != null)
+        last = last.getNext();
+      last.setNext(link);
+    }
+  }
+
+  public void insertAfter(@NotNull Link<T> previousNode, T object) {
+    if (previousNode == null) {
+      throw new IllegalArgumentException("Previous node cannot be null");
+    }
+    Link<T> link = new Link<>(object);
+    link.setNext(previousNode.next);
+    previousNode.setNext(link);
   }
 
   public Link<T> delete() {
-    Link<T> temp = first;
-    if(first == null){
+    Link<T> temp = head;
+    if(head == null){
       return null;
     }
-    first = first.next;
+    head = head.getNext();
     return temp;
   }
 
-  public T first() {
-    if(first != null)
-      return first.data;
-    return null;
+  public @Nullable Link<T> getHead() {
+    return head;
   }
 
   protected static class Link<T> {
@@ -35,6 +57,19 @@ public class CustomLinkedList<T> {
 
     public Link(T data) {
       this.data = data;
+      this.next = null;
+    }
+
+    public @Nullable Link<T> getNext() {
+      return next;
+    }
+
+    private void setNext(@NotNull Link<T> next) {
+      this.next = next;
+    }
+
+    public T getValue() {
+      return data;
     }
 
   }

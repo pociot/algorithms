@@ -9,23 +9,45 @@ public class CustomLinkedListTest {
   public void testLinkedList() {
     CustomLinkedList<Integer> list = new CustomLinkedList<>();
 
-    list.insert(1);
-    list.insert(2);
-    list.insert(3);
-    list.insert(4);
-    list.insert(5);
+    list.push(1);
+    list.push(2);
+    list.push(3);
+    list.push(4);
+    list.insertAfter(list.getHead().getNext(), 10);
+    list.push(5);
+    list.append(9);
+    list.append(8);
+    list.append(7);
 
-    Assert.assertEquals((Integer)5, list.first());
-    list.delete();
-    Assert.assertEquals((Integer)4, list.first());
-    list.delete();
-    Assert.assertEquals((Integer)3, list.first());
-    list.delete();
-    Assert.assertEquals((Integer)2, list.first());
-    list.delete();
-    Assert.assertEquals((Integer)1, list.first());
-    list.delete();
-    Assert.assertNull(list.first());
+    Assert.assertEquals((Integer)5, list.getHead().getValue());
+    Assert.assertEquals((Integer)5, list.delete().getValue());
+
+    Assert.assertEquals((Integer)4, list.getHead().getValue());
+    Assert.assertEquals((Integer)4, list.delete().getValue());
+
+    Assert.assertEquals((Integer)3, list.getHead().getValue());
+    Assert.assertEquals((Integer)3, list.delete().getValue());
+
+    Assert.assertEquals((Integer)10, list.getHead().getValue());
+    Assert.assertEquals((Integer)10, list.delete().getValue());
+
+    Assert.assertEquals((Integer)2, list.getHead().getValue());
+    Assert.assertEquals((Integer)2, list.delete().getValue());
+
+    Assert.assertEquals((Integer)1, list.getHead().getValue());
+    Assert.assertEquals((Integer)1, list.delete().getValue());
+
+    Assert.assertEquals((Integer)9, list.getHead().getValue());
+    Assert.assertEquals((Integer)9, list.delete().getValue());
+
+    Assert.assertEquals((Integer)8, list.getHead().getValue());
+    Assert.assertEquals((Integer)8, list.delete().getValue());
+
+    Assert.assertEquals((Integer)7, list.getHead().getValue());
+    Assert.assertEquals((Integer)7, list.delete().getValue());
+
+    Assert.assertNull(list.delete());
+    Assert.assertNull(list.getHead());
   }
 
 }
