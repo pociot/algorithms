@@ -29,7 +29,6 @@ public class MergeSort extends SortingAlgorithm {
     T[] tempLeft = arrayCopyOf(left, left.length);
     T[] tempRight = arrayCopyOf(right, right.length);
     @SuppressWarnings("unchecked") T[] result = (T[]) Array.newInstance(left.getClass().getComponentType(), 0);
-    System.out.println();
     while (getLength(tempLeft) != 0 && getLength(tempRight) != 0) {
       if(tempLeft[0].compareTo(tempRight[0]) <= 0) {
         result = add(result, tempLeft[0]);
