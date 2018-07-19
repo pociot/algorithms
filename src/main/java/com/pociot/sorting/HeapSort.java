@@ -7,11 +7,11 @@ public class HeapSort extends SortingAlgorithm {
   public <T extends Number & Comparable<? super T>> T[] sort(T[] array) {
     int n = array.length;
 
-    for (int i = n / 2 - 1; i > 0; i--) {
+    for (int i = (n / 2) - 1; i >= 0; i--) {
       heapify(array, n, i);
     }
 
-    for (int i = n-1; i > 0; i--) {
+    for (int i = n - 1; i >= 0; i--) {
       swap(array, i, 0);
       heapify(array, i, 0);
     }
