@@ -2,7 +2,6 @@ package com.pociot.sorting;
 
 public class HeapSort extends SortingAlgorithm {
 
-  //TODO: fix
   @Override
   public <T extends Number & Comparable<? super T>> T[] sort(T[] array) {
     int n = array.length;

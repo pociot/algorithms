@@ -44,12 +44,12 @@ public class BinarySearchTree<T extends Comparable<? super T>> {
     if (root == null)
       return;
 
-    space += 10;
+    space += 4;
 
     print2DUtil(root.getRight(), space, stringBuilder);
 
     stringBuilder.append("\n");
-    for (int i = 10; i < space; i++)
+    for (int i = 4; i < space; i++)
       stringBuilder.append(" ");
     stringBuilder.append(root.getKey()).append("\n");
 
