@@ -34,7 +34,7 @@ public class BinarySearchTree<T extends Comparable<? super T>> {
     return stringBuilder.toString();
   }
 
-  public String print2DUtil() {
+  protected String print2DUtil() {
     StringBuilder stringBuilder = new StringBuilder();
     print2DUtil(root, 0, stringBuilder);
     return stringBuilder.toString();
@@ -56,7 +56,7 @@ public class BinarySearchTree<T extends Comparable<? super T>> {
     print2DUtil(root.getLeft(), space, stringBuilder);
   }
 
-  void printInOrderRecursive(TreeNode<T> root, StringBuilder stringBuilder) {
+  private void printInOrderRecursive(TreeNode<T> root, StringBuilder stringBuilder) {
     if (root != null) {
       printInOrderRecursive(root.getLeft(), stringBuilder);
       stringBuilder.append(root.getKey()).append(" ");
