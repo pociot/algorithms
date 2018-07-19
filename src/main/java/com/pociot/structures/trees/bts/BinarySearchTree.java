@@ -28,6 +28,42 @@ public class BinarySearchTree<T extends Comparable<? super T>> {
     return root;
   }
 
+  public void delete(T key) {
+    root = deleteRecursive(root, key);
+  }
+
+  private TreeNode<T> deleteRecursive(TreeNode<T> root, T key) {
+    if (root == null)
+      return null;
+
+    if (key.compareTo(root.getKey()) < 0)
+      root.setLeft(deleteRecursive(root.getLeft(), key));
+    else if (key.compareTo(root.getKey()) > 0)
+      root.setRight(deleteRecursive(root.getRight(), key));
+    else {
+      if (root.getLeft() == null)
+        return root.getRight();
+      else if (root.getRight() == null)
+        return root.getLeft();
+
+      root.setKey(minValue(root.getRight()));
+
+      root.setRight(deleteRecursive(root.getRight(), root.getKey()));
+    }
+    return root;
+  }
+
+  private T minValue(TreeNode<T> root)
+  {
+    T minv = root.getKey();
+    while (root.getLeft() != null)
+    {
+      minv = root.getLeft().getKey();
+      root = root.getLeft();
+    }
+    return minv;
+  }
+
   public String printInOrder() {
     StringBuilder stringBuilder = new StringBuilder();
     printInOrderRecursive(root, stringBuilder);
