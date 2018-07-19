@@ -2,7 +2,6 @@ package com.pociot.sorting;
 
 public class QuickSort extends SortingAlgorithm {
 
-  //TODO: add concurrent sorting
   @Override
   public <T extends Number & Comparable<? super T>> T[] sort(T[] array) {
     lomutoSort(array, 0, array.length - 1);
