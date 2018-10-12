@@ -18,7 +18,7 @@ class SortingTestBase {
   private Integer[] sortedTable = null;
 
   void sortTest(SortingAlgorithm algorithm) {
-    logger.info("{} started", algorithm.getClass());
+    logger.info("{} started", algorithm.getClass().getSimpleName());
     long startDate = System.currentTimeMillis();
     Assert.assertArrayEquals(sortedTable, algorithm.sort(table));
     logger.info("Sorting took {} ms", System.currentTimeMillis() - startDate);
