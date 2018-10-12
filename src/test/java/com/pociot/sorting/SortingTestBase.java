@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.Assert;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class SortingTestBase {
 
@@ -20,17 +21,17 @@ class SortingTestBase {
   void sortTest(SortingAlgorithm algorithm) {
     logger.info("{} started", algorithm.getClass().getSimpleName());
     long startDate = System.currentTimeMillis();
-    Assert.assertArrayEquals(sortedTable, algorithm.sort(table));
+    assertArrayEquals(sortedTable, algorithm.sort(table));
     logger.info("Sorting took {} ms", System.currentTimeMillis() - startDate);
   }
 
   void setUp(String unsortedFilePath, String sortedFilePath) {
     initializeUnsortedList(unsortedFilePath);
-    Assert.assertNotNull(unsortedList);
+    assertNotNull(unsortedList);
     initializeSortedArray(sortedFilePath);
-    Assert.assertNotNull(sortedTable);
+    assertNotNull(sortedTable);
     initializeUnsortedArray();
-    Assert.assertNotNull(table);
+    assertNotNull(table);
   }
 
   private void initializeUnsortedList(String filePath) {
