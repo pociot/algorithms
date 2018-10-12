@@ -17,17 +17,17 @@ public class Helper {
 
   private static void generateTestData() throws IOException {
     Random random = new Random();
-    int[] array = new int[1000];
-    FileOutputStream fileOutputStream = new FileOutputStream("integers_small.txt");
-    for (int i = 0; i < 1000; i++) {
-      array[i] = random.nextInt(10000);
+    int[] array = new int[100000];
+    FileOutputStream fileOutputStream = new FileOutputStream("integers.txt");
+    for (int i = 0; i < 100000; i++) {
+      array[i] = random.nextInt(100000);
       fileOutputStream.write(String.valueOf(array[i] + "\n").getBytes());
     }
     fileOutputStream.close();
 
     Arrays.sort(array);
-    fileOutputStream = new FileOutputStream("integers_small_sorted.txt");
-    for (int i = 0; i < 1000; i++) {
+    fileOutputStream = new FileOutputStream("integers_sorted.txt");
+    for (int i = 0; i < 100000; i++) {
       fileOutputStream.write(String.valueOf(array[i] + "\n").getBytes());
     }
     fileOutputStream.close();

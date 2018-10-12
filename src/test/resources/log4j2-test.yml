@@ -16,20 +16,34 @@ Configutation:
 
     File:
       name: File_Appender
-      fileName: ${log-path}/logfile.log
+      fileName: ${log-path}/error.log
       PatternLayout:
         pattern: "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"
 
+    RollingFile:
+    - name: RollingFile_Appender
+      fileName: ${log-path}/debug.log
+      filePattern: "logs/archive/rollingfile.log.%d{yyyy-MM-dd-hh-mm}.gz"
+      PatternLayout:
+        pattern: "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"
+      Policies:
+        SizeBasedTriggeringPolicy:
+          size: 1 MB
+      DefaultRollOverStrategy:
+        max: 5
+
   Loggers:
 
-      Root:
-        level: debug
-        AppenderRef:
-          - ref: Console_Appender
+    Root:
+      level: debug
+      AppenderRef:
+      - ref: Console_Appender
 
-      Logger:
-        - name: com.pociot.sorting
-          level: debug
-          AppenderRef:
-            - ref: File_Appender
-              level: debug
+    Logger:
+    - name: com.pociot.sorting
+      level: debug
+      AppenderRef:
+      - ref: File_Appender
+        level: error
+      - ref: RollingFile_Appender
+        level: debug
