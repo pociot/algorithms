@@ -1,13 +1,20 @@
 package com.pociot.sorting;
 
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import static java.util.stream.Collectors.toList;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Stream;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 class SortingTestBase {
 
@@ -53,14 +60,15 @@ class SortingTestBase {
   }
 
   private List<Integer> readFileToIntegerList(String filePath) {
-    InputStream inputStreamUnsorted = getClass().getClassLoader().getResourceAsStream(
-        filePath);
-    List<Integer> integerList = new ArrayList<>();
-    Scanner fileScannerUnsorted = new Scanner(inputStreamUnsorted)
-        .useDelimiter(System.getProperty("line.separator"));
-    while (fileScannerUnsorted.hasNextInt()) {
-      integerList.add(fileScannerUnsorted.nextInt());
+    String absoluteFilePath = Objects
+        .requireNonNull(getClass().getClassLoader().getResource(filePath))
+        .getPath();
+    Path path = Paths.get(absoluteFilePath);
+    try (Stream<String> lines = Files.lines(path, StandardCharsets.UTF_8)) {
+      return lines.map(Integer::valueOf).collect(toList());
+    } catch (IOException e) {
+      logger.error("Error while reading file {}", filePath, e);
     }
-    return integerList;
+    return new ArrayList<>();
   }
 }
