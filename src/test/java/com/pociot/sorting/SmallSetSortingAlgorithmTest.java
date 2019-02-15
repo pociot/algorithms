@@ -3,6 +3,8 @@ package com.pociot.sorting;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledIfEnvironmentVariable;
+import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 
 class SmallSetSortingAlgorithmTest extends SortingTestBase{
 
@@ -50,8 +52,16 @@ class SmallSetSortingAlgorithmTest extends SortingTestBase{
   }
 
   @Test
-  void shouldThrowExceptionInMergeSort() {
+  @DisabledIfEnvironmentVariable(named = "TRAVIS", matches = "true")
+  void shouldThrowIllegalArgumentException() {
     //noinspection ConstantConditions
     Assertions.assertThrows(IllegalArgumentException.class, () -> new MergeSort().sort(null));
+  }
+
+  @Test
+  @EnabledIfEnvironmentVariable(named = "TRAVIS", matches = "true")
+  void shouldThrowNullPointerException() {
+    //noinspection ConstantConditions
+    Assertions.assertThrows(NullPointerException.class, () -> new MergeSort().sort(null));
   }
 }
