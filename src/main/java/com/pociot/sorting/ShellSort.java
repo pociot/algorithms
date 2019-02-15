@@ -2,7 +2,7 @@ package com.pociot.sorting;
 
 import org.jetbrains.annotations.NotNull;
 
-public class ShellSort extends SortingAlgorithm {
+public class ShellSort implements SortingAlgorithm {
 
   @Override
   public <T extends Number & Comparable<? super T>> T[] sort(@NotNull T[] array) {

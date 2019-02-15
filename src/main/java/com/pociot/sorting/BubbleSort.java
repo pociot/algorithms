@@ -2,7 +2,7 @@ package com.pociot.sorting;
 
 import org.jetbrains.annotations.NotNull;
 
-public class BubbleSort extends SortingAlgorithm {
+public class BubbleSort implements SortingAlgorithm {
 
   @Override
   public <T extends Number & Comparable<? super T>> T[] sort(@NotNull T[] array) {

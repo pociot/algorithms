@@ -3,7 +3,7 @@ package com.pociot.sorting;
 import java.lang.reflect.Array;
 import org.jetbrains.annotations.NotNull;
 
-public class MergeSort extends SortingAlgorithm {
+public class MergeSort implements SortingAlgorithm {
 
   @Override
   public <T extends Number & Comparable<? super T>> T[] sort(@NotNull T[] array) {

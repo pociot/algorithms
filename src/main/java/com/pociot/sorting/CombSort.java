@@ -2,7 +2,7 @@ package com.pociot.sorting;
 
 import org.jetbrains.annotations.NotNull;
 
-public class CombSort extends SortingAlgorithm {
+public class CombSort implements SortingAlgorithm {
 
   @Override
   public <T extends Number & Comparable<? super T>> T[] sort(@NotNull T[] array) {
