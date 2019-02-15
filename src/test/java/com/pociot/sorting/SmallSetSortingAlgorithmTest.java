@@ -1,5 +1,6 @@
 package com.pociot.sorting;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -46,5 +47,11 @@ class SmallSetSortingAlgorithmTest extends SortingTestBase{
   @Test
   void combSortTest() {
     sortTest(new CombSort());
+  }
+
+  @Test
+  void shouldThrowExceptionInMergeSort() {
+    //noinspection ConstantConditions
+    Assertions.assertThrows(IllegalArgumentException.class, () -> new MergeSort().sort(null));
   }
 }
