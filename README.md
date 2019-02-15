@@ -14,5 +14,7 @@ Sorting:
 - [x] Shell sort
 
 Data structures:
-- [x] Linked list
-- [x] Binary search tree
+- [ ] Linked list
+- [ ] Binary search tree
+- [ ] Hash table 
+- [ ] Red-black tree
