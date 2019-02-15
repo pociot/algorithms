@@ -19,12 +19,16 @@ public class MergeSort extends SortingAlgorithm {
 
     for (int i = 0; i < n; i++) {
       if (i < (n / 2)) {
+        assert left != null;
         left = add(left, array[i]);
       } else {
+        assert right != null;
         right = add(right, array[i]);
       }
     }
+    assert left != null;
     left = sort(left);
+    assert right != null;
     right = sort(right);
 
     return merge(left, right);
@@ -37,19 +41,23 @@ public class MergeSort extends SortingAlgorithm {
         .newInstance(left.getClass().getComponentType(), 0);
     while (getLength(tempLeft) != 0 && getLength(tempRight) != 0) {
       if (tempLeft[0].compareTo(tempRight[0]) <= 0) {
+        assert result != null;
         result = add(result, tempLeft[0]);
         tempLeft = removeFirst(tempLeft);
       } else {
+        assert result != null;
         result = add(result, tempRight[0]);
         tempRight = removeFirst(tempRight);
       }
     }
 
     while (getLength(tempLeft) != 0) {
+      assert result != null;
       result = add(result, tempLeft[0]);
       tempLeft = removeFirst(tempLeft);
     }
     while (getLength(tempRight) != 0) {
+      assert result != null;
       result = add(result, tempRight[0]);
       tempRight = removeFirst(tempRight);
     }

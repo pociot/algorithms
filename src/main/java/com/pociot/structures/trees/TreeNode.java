@@ -1,8 +1,10 @@
 package com.pociot.structures.trees;
 
 public class TreeNode<T extends Comparable<? super T>> {
-  T key;
-  TreeNode<T> left, right;
+
+  private T key;
+  private TreeNode<T> left;
+  private TreeNode<T> right;
 
   public TreeNode(T key) {
     setKey(key);
