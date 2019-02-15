@@ -1,7 +1,7 @@
 package com.pociot.sorting;
 
-import com.sun.istack.internal.NotNull;
 import java.lang.reflect.Array;
+import org.jetbrains.annotations.NotNull;
 
 abstract class SortingAlgorithm {
 
