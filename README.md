@@ -12,6 +12,7 @@ Sorting:
 - [x] Quick sort
 - [x] Selection sort
 - [x] Shell sort
+
 Data structures:
 - [x] Linked list
 - [x] Binary search tree
