@@ -1,9 +1,11 @@
 package com.pociot.sorting;
 
+import org.jetbrains.annotations.NotNull;
+
 public class CombSort extends SortingAlgorithm {
 
   @Override
-  public <T extends Number & Comparable<? super T>> T[] sort(T[] array) {
+  public <T extends Number & Comparable<? super T>> T[] sort(@NotNull T[] array) {
     T[] returnArray = arrayCopyOf(array, array.length);
     int n = returnArray.length;
 

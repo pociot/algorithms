@@ -1,9 +1,11 @@
 package com.pociot.sorting;
 
+import org.jetbrains.annotations.NotNull;
+
 public class ShellSort extends SortingAlgorithm {
 
   @Override
-  public <T extends Number & Comparable<? super T>> T[] sort(T[] array) {
+  public <T extends Number & Comparable<? super T>> T[] sort(@NotNull T[] array) {
     T[] returnArray = arrayCopyOf(array, array.length);
     for (int gap = returnArray.length / 2; gap > 0; gap /= 2) {
       for (int i = gap; i < returnArray.length; i++) {

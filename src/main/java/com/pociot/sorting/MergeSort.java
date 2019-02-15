@@ -1,11 +1,12 @@
 package com.pociot.sorting;
 
 import java.lang.reflect.Array;
+import org.jetbrains.annotations.NotNull;
 
 public class MergeSort extends SortingAlgorithm {
 
   @Override
-  public <T extends Number & Comparable<? super T>> T[] sort(T[] array) {
+  public <T extends Number & Comparable<? super T>> T[] sort(@NotNull T[] array) {
     int n = array.length;
     if (n <= 1) {
       return array;
@@ -55,7 +56,7 @@ public class MergeSort extends SortingAlgorithm {
     return result;
   }
 
-  private <T> T[] add(T[] array, T element) {
+  private <T> T[] add(@NotNull T[] array, T element) {
     Object newArray = Array.newInstance(array.getClass().getComponentType(), array.length + 1);
     //noinspection SuspiciousSystemArraycopy
     System.arraycopy(array, 0, newArray, 0, array.length);
@@ -64,12 +65,12 @@ public class MergeSort extends SortingAlgorithm {
     return (T[]) newArray;
   }
 
-  private <T> T[] removeFirst(T[] array) {
+  private <T> T[] removeFirst(@NotNull T[] array) {
     return remove(array, 0);
   }
 
   @SuppressWarnings("SameParameterValue")
-  private <T> T[] remove(T[] array, int index) {
+  private <T> T[] remove(@NotNull T[] array, int index) {
     int length = array.length;
     if (index >= 0 && index < length) {
       @SuppressWarnings("unchecked") T[] result = (T[]) Array

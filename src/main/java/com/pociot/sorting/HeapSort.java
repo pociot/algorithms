@@ -1,9 +1,11 @@
 package com.pociot.sorting;
 
+import org.jetbrains.annotations.NotNull;
+
 public class HeapSort extends SortingAlgorithm {
 
   @Override
-  public <T extends Number & Comparable<? super T>> T[] sort(T[] array) {
+  public <T extends Number & Comparable<? super T>> T[] sort(@NotNull T[] array) {
     T[] returnArray = arrayCopyOf(array, array.length);
     heapSort(returnArray);
     return returnArray;
