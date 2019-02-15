@@ -7,17 +7,21 @@ public class MergeSort extends SortingAlgorithm {
   @Override
   public <T extends Number & Comparable<? super T>> T[] sort(T[] array) {
     int n = array.length;
-    if (n <= 1)
+    if (n <= 1) {
       return array;
+    }
 
-    @SuppressWarnings("unchecked") T[] left = (T[]) Array.newInstance(array.getClass().getComponentType(), 0);
-    @SuppressWarnings("unchecked") T[] right = (T[]) Array.newInstance(array.getClass().getComponentType(), 0);
+    @SuppressWarnings("unchecked") T[] left = (T[]) Array
+        .newInstance(array.getClass().getComponentType(), 0);
+    @SuppressWarnings("unchecked") T[] right = (T[]) Array
+        .newInstance(array.getClass().getComponentType(), 0);
 
     for (int i = 0; i < n; i++) {
-      if (i < (n / 2))
+      if (i < (n / 2)) {
         left = add(left, array[i]);
-      else
+      } else {
         right = add(right, array[i]);
+      }
     }
     left = sort(left);
     right = sort(right);
@@ -25,12 +29,13 @@ public class MergeSort extends SortingAlgorithm {
     return merge(left, right);
   }
 
-  private <T extends Number & Comparable<? super T>>T[] merge(T[] left, T[] right) {
+  private <T extends Number & Comparable<? super T>> T[] merge(T[] left, T[] right) {
     T[] tempLeft = arrayCopyOf(left, left.length);
     T[] tempRight = arrayCopyOf(right, right.length);
-    @SuppressWarnings("unchecked") T[] result = (T[]) Array.newInstance(left.getClass().getComponentType(), 0);
+    @SuppressWarnings("unchecked") T[] result = (T[]) Array
+        .newInstance(left.getClass().getComponentType(), 0);
     while (getLength(tempLeft) != 0 && getLength(tempRight) != 0) {
-      if(tempLeft[0].compareTo(tempRight[0]) <= 0) {
+      if (tempLeft[0].compareTo(tempRight[0]) <= 0) {
         result = add(result, tempLeft[0]);
         tempLeft = removeFirst(tempLeft);
       } else {
@@ -67,7 +72,8 @@ public class MergeSort extends SortingAlgorithm {
   private <T> T[] remove(T[] array, int index) {
     int length = array.length;
     if (index >= 0 && index < length) {
-      @SuppressWarnings("unchecked") T[] result = (T[]) Array.newInstance(array.getClass().getComponentType(), length - 1);
+      @SuppressWarnings("unchecked") T[] result = (T[]) Array
+          .newInstance(array.getClass().getComponentType(), length - 1);
       System.arraycopy(array, 0, result, 0, index);
       if (index < length - 1) {
         System.arraycopy(array, index + 1, result, index, length - index - 1);
@@ -78,13 +84,7 @@ public class MergeSort extends SortingAlgorithm {
     }
   }
 
-  private <T> T[] arrayCopyOf(T[] array, int length) {
-    @SuppressWarnings("unchecked") T[] result = (T[]) Array.newInstance(array.getClass().getComponentType(), length);
-    System.arraycopy(array, 0, result, 0, array.length);
-    return result;
-  }
-
   private int getLength(Object array) {
-    return array == null ? 0: Array.getLength(array);
+    return array == null ? 0 : Array.getLength(array);
   }
 }

@@ -3,6 +3,7 @@ package com.pociot.structures.trees.bts;
 import com.pociot.structures.trees.TreeNode;
 
 public class BinarySearchTree<T extends Comparable<? super T>> {
+
   private TreeNode<T> root;
 
   public BinarySearchTree() {
@@ -15,8 +16,7 @@ public class BinarySearchTree<T extends Comparable<? super T>> {
 
   private TreeNode<T> insertRecursive(T key, TreeNode<T> root) {
     if (root == null) {
-      root = new TreeNode<>(key);
-      return root;
+      return new TreeNode<>(key);
     }
 
     if (key.compareTo(root.getKey()) < 0) {
@@ -33,18 +33,20 @@ public class BinarySearchTree<T extends Comparable<? super T>> {
   }
 
   private TreeNode<T> deleteRecursive(TreeNode<T> root, T key) {
-    if (root == null)
+    if (root == null) {
       return null;
+    }
 
-    if (key.compareTo(root.getKey()) < 0)
+    if (key.compareTo(root.getKey()) < 0) {
       root.setLeft(deleteRecursive(root.getLeft(), key));
-    else if (key.compareTo(root.getKey()) > 0)
+    } else if (key.compareTo(root.getKey()) > 0) {
       root.setRight(deleteRecursive(root.getRight(), key));
-    else {
-      if (root.getLeft() == null)
+    } else {
+      if (root.getLeft() == null) {
         return root.getRight();
-      else if (root.getRight() == null)
+      } else if (root.getRight() == null) {
         return root.getLeft();
+      }
 
       root.setKey(minValue(root.getRight()));
 
@@ -53,11 +55,9 @@ public class BinarySearchTree<T extends Comparable<? super T>> {
     return root;
   }
 
-  private T minValue(TreeNode<T> root)
-  {
+  private T minValue(TreeNode<T> root) {
     T minv = root.getKey();
-    while (root.getLeft() != null)
-    {
+    while (root.getLeft() != null) {
       minv = root.getLeft().getKey();
       root = root.getLeft();
     }
@@ -77,16 +77,18 @@ public class BinarySearchTree<T extends Comparable<? super T>> {
   }
 
   private void print2DUtil(TreeNode root, int space, StringBuilder stringBuilder) {
-    if (root == null)
+    if (root == null) {
       return;
+    }
 
     space += 4;
 
     print2DUtil(root.getRight(), space, stringBuilder);
 
     stringBuilder.append("\n");
-    for (int i = 4; i < space; i++)
+    for (int i = 4; i < space; i++) {
       stringBuilder.append(" ");
+    }
     stringBuilder.append(root.getKey()).append("\n");
 
     print2DUtil(root.getLeft(), space, stringBuilder);

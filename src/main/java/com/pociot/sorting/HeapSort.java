@@ -4,35 +4,50 @@ public class HeapSort extends SortingAlgorithm {
 
   @Override
   public <T extends Number & Comparable<? super T>> T[] sort(T[] array) {
-    int n = array.length;
-
-    for (int i = (n / 2) - 1; i >= 0; i--) {
-      heapify(array, n, i);
-    }
-
-    for (int i = n - 1; i >= 0; i--) {
-      swap(array, i, 0);
-      heapify(array, i, 0);
-    }
-    return array;
+    T[] returnArray = arrayCopyOf(array, array.length);
+    heapSort(returnArray);
+    return returnArray;
   }
 
-  private <T extends Number & Comparable<? super T>> void heapify(T[] array, int n, int i) {
+  private <T extends Number & Comparable<? super T>> void maxHeapify(T[] array, int i,
+      int heapSize) {
     int maxIndex = i;
-    int leftIndex = 2 * i + 1;
-    int rightIndex = 2 * i + 2;
+    int l = left(i);
+    int r = right(i);
 
-    if (leftIndex < n && array[leftIndex].compareTo(array[maxIndex]) > 0) {
-      maxIndex = leftIndex;
+    if (l < heapSize && array[l].compareTo(array[i]) > 0) {
+      maxIndex = l;
     }
 
-    if (rightIndex < n && array[rightIndex].compareTo(array[maxIndex]) > 0) {
-      maxIndex = rightIndex;
+    if (r < heapSize && array[r].compareTo(array[maxIndex]) > 0) {
+      maxIndex = r;
     }
 
     if (maxIndex != i) {
       swap(array, i, maxIndex);
-      heapify(array, n, maxIndex);
+      maxHeapify(array, maxIndex, heapSize);
     }
+  }
+
+  private <T extends Number & Comparable<? super T>> void buildMaxHeap(T[] array) {
+    for (int i = (array.length / 2) - 1; i >= 0; i--) {
+      maxHeapify(array, i, array.length);
+    }
+  }
+
+  private <T extends Number & Comparable<? super T>> void heapSort(T[] array) {
+    buildMaxHeap(array);
+    for (int i = array.length - 1; i >= 0; i--) {
+      swap(array, 0, i);
+      maxHeapify(array, 0, i);
+    }
+  }
+
+  private int left(int i) {
+    return 2 * i + 1;
+  }
+
+  private int right(int i) {
+    return 2 * i + 2;
   }
 }

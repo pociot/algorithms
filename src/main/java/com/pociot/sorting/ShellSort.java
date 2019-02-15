@@ -4,16 +4,17 @@ public class ShellSort extends SortingAlgorithm {
 
   @Override
   public <T extends Number & Comparable<? super T>> T[] sort(T[] array) {
-    for (int gap = array.length / 2; gap > 0; gap /= 2) {
-      for (int i = gap; i < array.length; i++) {
-        T temp = array[i];
+    T[] returnArray = arrayCopyOf(array, array.length);
+    for (int gap = returnArray.length / 2; gap > 0; gap /= 2) {
+      for (int i = gap; i < returnArray.length; i++) {
+        T temp = returnArray[i];
         int j;
-        for (j = i; j >= gap && array[j - gap].compareTo(temp) > 0; j -= gap) {
-          array[j] = array[j - gap];
+        for (j = i; j >= gap && returnArray[j - gap].compareTo(temp) > 0; j -= gap) {
+          returnArray[j] = returnArray[j - gap];
         }
-        array[j] = temp;
+        returnArray[j] = temp;
       }
     }
-    return array;
+    return returnArray;
   }
 }
