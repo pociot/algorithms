@@ -1,0 +1,19 @@
+dist: trusty
+sudo: required
+
+language: java
+jdk: oraclejdk8
+
+branches:
+  only:
+    - master
+    -
+addons:
+  sonarcloud:
+    organization: pociot-github
+    token:
+      secure: fD62oNJGOPJ/A4dzOUPK9mV27EhkcRB32QIiWKacdEv3CEEnkmyBa6/OjJ/+yKrMUYmL4Rh6wv7GjItZiRjQxKR4ChtKbjqam6S/i+gNmgax+e4cqG4IQeUGtl6R67szndW+bkGNoOW2UR/qZIsFMzFAhiOFJgqlqTXr/ZiF13/8OfvTz/6A9GD+kSdGkbdGmzDyWh3cG/DHYMXS0kbxxgT4WxPBQzqbRCEF8TTeTJIW2UnT3AWFrtoPX/4dM7/hamrPqhHgvkaFhy+V1YzIJV03rWN9GnUDs7jGMJ7XUpyvOy47J1fuDm1QInqIjjdjDH+lQRWJT9Rh8lqV4PT7d9tC/uzLqy3NkgXWM9qmfD3VvOkpGDkMksUTtPnQGPUKfljUeNJ9ZjJOpGC+b5l04bLPpMopjtinlsYk7KVGKHlAuwzOW5pJB5qm93lLAOEWE0/MO2U6vxpkpxqBNvFCNhaCL01jK3eJUGQdj7WUnI+POU3j0VIO7i23fsFO1d3+0Bqj01isD9BeSoIO8fiJ7vJ7GMFohU7TX7BreTfWmTZrsgt+5aQLZ61wwPdqdaFa4sYlDSEfxDSKs9aBSw46vtuzgDtMwiWTsnmjiauJrFX+MrH7AnYQsaxynSiQwZmJ/NgMARwTGHNrwY82rTQQud/+0zKipjYD804aPcENzCY=
+
+script:
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package
+  - sonar-scanner
