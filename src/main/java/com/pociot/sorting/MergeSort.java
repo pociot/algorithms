@@ -57,16 +57,21 @@ public class MergeSort implements SortingAlgorithm {
   }
 
   private <T> T[] add(T[] array, T element) {
-    Object newArray = Array.newInstance(array.getClass().getComponentType(), array.length + 1);
-    //noinspection ConstantConditions
-    if (newArray == null) {
-      throw new IllegalArgumentException("Error while creating new array.");
-    }
+    Object newArray = getNewArrayPlusOne(array);
     //noinspection SuspiciousSystemArraycopy
     System.arraycopy(array, 0, newArray, 0, array.length);
     Array.set(newArray, getLength(newArray) - 1, element);
     //noinspection unchecked
     return (T[]) newArray;
+  }
+
+  @NotNull <T> Object getNewArrayPlusOne(T[] array) {
+    Object newArray = Array.newInstance(array.getClass().getComponentType(), array.length + 1);
+    //noinspection ConstantConditions
+    if (newArray == null) {
+      throw new IllegalArgumentException("Error while creating new array.");
+    }
+    return newArray;
   }
 
   private <T> T[] removeFirst(@NotNull T[] array) {
