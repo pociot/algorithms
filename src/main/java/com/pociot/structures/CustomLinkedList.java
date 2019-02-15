@@ -1,7 +1,6 @@
 package com.pociot.structures;
 
 
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class CustomLinkedList<T> {
@@ -30,7 +29,7 @@ public class CustomLinkedList<T> {
     }
   }
 
-  public void insertAfter(@NotNull Link<T> previousNode, T object) {
+  public void insertAfter(Link<T> previousNode, T object) {
     if (previousNode == null) {
       throw new IllegalArgumentException("Previous node cannot be null");
     }
@@ -65,7 +64,7 @@ public class CustomLinkedList<T> {
       return next;
     }
 
-    private void setNext(@NotNull Link<T> next) {
+    private void setNext(Link<T> next) {
       this.next = next;
     }
 
