@@ -42,4 +42,19 @@ class BinarySearchTreeTest {
     logger.info("\n {}", bts.print2DUtil());
   }
 
+  @Test
+  void minValueTest() {
+    BinarySearchTree<Integer> bst = new BinarySearchTree<>();
+    bst.insert(50);
+    bst.insert(30);
+    bst.insert(20);
+    bst.insert(40);
+    bst.insert(70);
+    bst.insert(60);
+    bst.insert(80);
+    logger.info("\n {}", bst.print2DUtil());
+    bst.delete(50);
+    logger.info("\n {}", bst.print2DUtil());
+  }
+
 }
