@@ -50,6 +50,11 @@ class SmallSetSortingAlgorithmTest extends SortingTestBase{
   }
 
   @Test
+  void insertionSort() {
+    sortTest(new InsertionSort());
+  }
+
+  @Test
   void shouldThrowOnPackagePrivateMethod() {
     Assertions
         .assertThrows(NullPointerException.class, () -> new MergeSort().getNewArrayPlusOne(null));
