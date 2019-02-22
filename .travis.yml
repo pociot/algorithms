@@ -17,3 +17,6 @@ addons:
 script:
   - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package
   - sonar-scanner
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
