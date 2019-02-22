@@ -1,6 +1,7 @@
 package com.pociot.sorting;
 
 import java.lang.reflect.Array;
+import java.util.Arrays;
 import org.jetbrains.annotations.NotNull;
 
 public class MergeSort implements SortingAlgorithm {
@@ -31,8 +32,8 @@ public class MergeSort implements SortingAlgorithm {
   }
 
   private <T extends Number & Comparable<? super T>> T[] merge(T[] left, T[] right) {
-    T[] tempLeft = arrayCopyOf(left, left.length);
-    T[] tempRight = arrayCopyOf(right, right.length);
+    T[] tempLeft = Arrays.copyOf(left, left.length);
+    T[] tempRight = Arrays.copyOf(right, right.length);
     @SuppressWarnings("unchecked") T[] result = (T[]) Array
         .newInstance(left.getClass().getComponentType(), 0);
     while (getLength(tempLeft) != 0 && getLength(tempRight) != 0) {
@@ -66,35 +67,14 @@ public class MergeSort implements SortingAlgorithm {
   }
 
   @NotNull <T> Object getNewArrayPlusOne(T[] array) {
-    Object newArray = Array.newInstance(array.getClass().getComponentType(), array.length + 1);
-    //noinspection ConstantConditions
-    if (newArray == null) {
-      throw new IllegalArgumentException("Error while creating new array.");
-    }
-    return newArray;
+    return Array.newInstance(array.getClass().getComponentType(), array.length + 1);
   }
 
   private <T> T[] removeFirst(@NotNull T[] array) {
-    return remove(array, 0);
+    return Arrays.copyOfRange(array, 1, array.length);
   }
 
-  @SuppressWarnings("SameParameterValue")
-  private <T> T[] remove(@NotNull T[] array, int index) {
-    int length = array.length;
-    if (index >= 0 && index < length) {
-      @SuppressWarnings("unchecked") T[] result = (T[]) Array
-          .newInstance(array.getClass().getComponentType(), length - 1);
-      System.arraycopy(array, 0, result, 0, index);
-      if (index < length - 1) {
-        System.arraycopy(array, index + 1, result, index, length - index - 1);
-      }
-      return result;
-    } else {
-      throw new IndexOutOfBoundsException("Index: " + index + ", Length: " + length);
-    }
-  }
-
-  private int getLength(Object array) {
+  int getLength(Object array) {
     return array == null ? 0 : Array.getLength(array);
   }
 }

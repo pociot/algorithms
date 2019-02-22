@@ -29,7 +29,7 @@ public class SortingAlgorithmTest extends SortingTestBase {
   }
 
   @Test
-  @EnabledIfEnvironmentVariable(named = LONG_RUNNING_TESTS, matches = "true")
+//  @EnabledIfEnvironmentVariable(named = LONG_RUNNING_TESTS, matches = "true")
   void mergeSortTest() {
     sortTest(new MergeSort());
   }

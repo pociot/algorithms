@@ -1,12 +1,13 @@
 package com.pociot.sorting;
 
+import java.util.Arrays;
 import org.jetbrains.annotations.NotNull;
 
 public class InsertionSort implements SortingAlgorithm {
 
   @Override
   public <T extends Number & Comparable<? super T>> T[] sort(@NotNull T[] array) {
-    T[] returnArray = arrayCopyOf(array, array.length);
+    T[] returnArray = Arrays.copyOf(array, array.length);
     int i = 1;
     while (i < returnArray.length) {
       int j = i;

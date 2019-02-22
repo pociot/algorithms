@@ -31,6 +31,15 @@ class BinarySearchTreeTest {
     assertEquals("20 40 50 80 ", bts.printInOrder());
 
     logger.info("\n {}", bts.print2DUtil());
+
+    bts.delete(50);
+    bts.delete(40);
+    bts.delete(80);
+    bts.delete(20);
+    bts.delete(5);
+    assertEquals("", bts.printInOrder());
+
+    logger.info("\n {}", bts.print2DUtil());
   }
 
 }

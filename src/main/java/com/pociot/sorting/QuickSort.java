@@ -1,12 +1,13 @@
 package com.pociot.sorting;
 
+import java.util.Arrays;
 import org.jetbrains.annotations.NotNull;
 
 public class QuickSort implements SortingAlgorithm {
 
   @Override
   public <T extends Number & Comparable<? super T>> T[] sort(@NotNull T[] array) {
-    T[] returnArray = arrayCopyOf(array, array.length);
+    T[] returnArray = Arrays.copyOf(array, array.length);
     lomutoSort(returnArray, 0, returnArray.length - 1);
     return returnArray;
   }
