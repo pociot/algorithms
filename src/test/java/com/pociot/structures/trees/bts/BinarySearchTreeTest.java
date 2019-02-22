@@ -52,6 +52,7 @@ class BinarySearchTreeTest {
     bst.insert(70);
     bst.insert(60);
     bst.insert(80);
+    bst.insert(80);
     logger.info("\n {}", bst.print2DUtil());
     bst.delete(50);
     logger.info("\n {}", bst.print2DUtil());
