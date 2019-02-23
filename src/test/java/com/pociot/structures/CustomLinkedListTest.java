@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import com.pociot.structures.CustomLinkedList.Link;
 import org.junit.jupiter.api.Test;
 
 class CustomLinkedListTest {
@@ -64,5 +65,16 @@ class CustomLinkedListTest {
     CustomLinkedList<Integer> list = new CustomLinkedList<>();
     list.append(1);
     assertEquals(1, list.getHead().getValue());
+  }
+
+  @Test
+  void shouldCompleteSearchWithoutErrors() {
+    CustomLinkedList<Integer> list = new CustomLinkedList<>();
+    list.push(1);
+    list.push(2);
+    Link<Integer> link = list.search(1);
+    assertEquals(link.getValue(), 1);
+    link = list.search(3);
+    assertNull(link);
   }
 }

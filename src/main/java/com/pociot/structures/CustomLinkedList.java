@@ -47,6 +47,14 @@ public class CustomLinkedList<T> {
     return temp;
   }
 
+  public Link<T> search(T key) {
+    Link<T> temp = head;
+    while (temp != null && !temp.getValue().equals(key)) {
+      temp = temp.getNext();
+    }
+    return temp;
+  }
+
   public @Nullable Link<T> getHead() {
     return head;
   }
