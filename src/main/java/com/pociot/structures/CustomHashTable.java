@@ -49,7 +49,7 @@ public class CustomHashTable<K, V> {
         return firstNode;
       }
       do {
-        if (firstNode.getKey().equals(key)) {
+        if (firstNode.hash == hash && firstNode.getKey().equals(key)) {
           return firstNode;
         }
       } while ((firstNode = firstNode.next) != null);
