@@ -19,12 +19,15 @@ public class CustomHashTable<K, V> {
     return (node = getNode(hash(key), key)) == null ? null : node.getValue();
   }
 
-  private int hash(Object key) {
-    int hash;
-    return (key == null) ? 0 : ((hash = key.hashCode()) ^ (hash >>> 16));
+  int hash(Object key) {
+    if (key == null) {
+      return 0;
+    }
+    int hashCode = key.hashCode();
+    return hashCode ^ (hashCode >>> 16);
   }
 
-  void putVal(int hash, K key, V value) {
+  private void putVal(int hash, K key, V value) {
     Node<K, V> existing;
     Node<K, V> newNode = new Node<>(hash, key, value, null);
     if ((existing = table[(table.length - 1) & hash]) == null) {
@@ -39,7 +42,7 @@ public class CustomHashTable<K, V> {
     checkMapSize();
   }
 
-  Node<K, V> getNode(int hash, K key) {
+  private Node<K, V> getNode(int hash, K key) {
     Node<K, V> firstNode = table[(table.length - 1) & hash];
     if (firstNode != null) {
       if (firstNode.getKey().equals(key)) {

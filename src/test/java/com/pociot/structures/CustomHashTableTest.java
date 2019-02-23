@@ -14,6 +14,7 @@ class CustomHashTableTest {
       hashTable.put("key-" + i, "value-" + i);
     }
     assertEquals(hashTable.get("key-2"), "value-2");
+    assertEquals(hashTable.get("key-58"), "value-58");
     assertEquals(hashTable.get("key-59"), "value-59");
     assertEquals(hashTable.get("key-34"), "value-34");
     assertEquals(hashTable.get("key-23"), "value-23");
@@ -24,6 +25,12 @@ class CustomHashTableTest {
     CustomHashTable<String, String> hashTable = new CustomHashTable<>();
     hashTable.put("some-key", "some-value");
     assertNull(hashTable.get("other-key"));
+  }
+
+  @Test
+  void hashShouldReturnZero() {
+    CustomHashTable<String, String> hashTable = new CustomHashTable<>();
+    assertEquals(hashTable.hash(null), 0);
   }
 
 }
