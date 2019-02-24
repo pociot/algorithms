@@ -18,4 +18,4 @@ Data structures:
 - [x] Linked list
 - [x] Binary search tree
 - [x] Hash table 
-- [ ] Red-black tree
+- [x] Red-black tree - missing some methods and tests
