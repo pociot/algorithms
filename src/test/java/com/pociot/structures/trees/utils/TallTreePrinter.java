@@ -5,31 +5,32 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class TreePrinter {
+public class TallTreePrinter {
 
   public static <T extends Comparable<? super T>> void printNode(RedBlackTreeNode<T> root) {
-    int maxLevel = TreePrinter.maxLevel(root);
+    int maxLevel = TallTreePrinter.maxLevel(root);
 
     printNodeInternal(Collections.singletonList(root), 1, maxLevel);
   }
 
   private static <T extends Comparable<? super T>> void printNodeInternal(
       List<RedBlackTreeNode<T>> nodes, int level, int maxLevel) {
-    if (nodes.isEmpty() || TreePrinter.isAllElementsNull(nodes)) {
+    if (nodes.isEmpty() || TallTreePrinter.isAllElementsNull(nodes)) {
       return;
     }
 
     int floor = maxLevel - level;
     int endgeLines = (int) Math.pow(2, (Math.max(floor - 1, 0)));
     int firstSpaces = (int) Math.pow(2, (floor)) - 1;
-    int betweenSpaces = (int) Math.pow(2, (floor + 1)) - 1;
+    int betweenSpaces = (int) Math.pow(2, (floor + 1));
 
-    TreePrinter.printWhitespaces(firstSpaces);
+    TallTreePrinter.printWhitespaces(firstSpaces);
 
     List<RedBlackTreeNode<T>> newNodes = new ArrayList<>();
     for (RedBlackTreeNode<T> node : nodes) {
+      String key = node == null || node.getKey() == null ? " " : node.getKey().toString();
       if (node != null) {
-        System.out.print(node.getKey() == null ? " " : node.getKey());
+        System.out.print(key);
         newNodes.add(node.getLeft());
         newNodes.add(node.getRight());
       } else {
@@ -38,33 +39,33 @@ public class TreePrinter {
         System.out.print(" ");
       }
 
-      TreePrinter.printWhitespaces(betweenSpaces);
+      TallTreePrinter.printWhitespaces(betweenSpaces - key.length());
     }
     System.out.println();
 
     for (int i = 1; i <= endgeLines; i++) {
       for (int j = 0; j < nodes.size(); j++) {
-        TreePrinter.printWhitespaces(firstSpaces - i);
+        TallTreePrinter.printWhitespaces(firstSpaces - i);
         if (nodes.get(j) == null) {
-          TreePrinter.printWhitespaces(endgeLines + endgeLines + i + 1);
+          TallTreePrinter.printWhitespaces(endgeLines + endgeLines + i + 1);
           continue;
         }
 
         if (nodes.get(j).getLeft() != null) {
           System.out.print("/");
         } else {
-          TreePrinter.printWhitespaces(1);
+          TallTreePrinter.printWhitespaces(1);
         }
 
-        TreePrinter.printWhitespaces(i + i - 1);
+        TallTreePrinter.printWhitespaces(i + i - 1);
 
         if (nodes.get(j).getRight() != null) {
           System.out.print("\\");
         } else {
-          TreePrinter.printWhitespaces(1);
+          TallTreePrinter.printWhitespaces(1);
         }
 
-        TreePrinter.printWhitespaces(endgeLines + endgeLines - i);
+        TallTreePrinter.printWhitespaces(endgeLines + endgeLines - i);
       }
 
       System.out.println();
@@ -84,7 +85,8 @@ public class TreePrinter {
       return 0;
     }
 
-    return Math.max(TreePrinter.maxLevel(node.getLeft()), TreePrinter.maxLevel(node.getRight()))
+    return Math.max(TallTreePrinter.maxLevel(node.getLeft()),
+        TallTreePrinter.maxLevel(node.getRight()))
         + 1;
   }
 

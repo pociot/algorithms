@@ -2,25 +2,22 @@ package com.pociot.structures.trees.rbtree;
 
 public class RedBlackTreeNode<T extends Comparable<? super T>> {
 
-  private T key;
+  private final T key;
   private RedBlackTreeNode<T> parent;
   private RedBlackTreeNode<T> left;
   private RedBlackTreeNode<T> right;
   private Color color;
 
-  public RedBlackTreeNode(T key, RedBlackTreeNode<T> parent) {
+  public RedBlackTreeNode(T key, RedBlackTreeNode<T> parent, RedBlackTreeNode<T> nil) {
     this.parent = parent;
     this.key = key;
-    this.left = null;
-    this.right = null;
+    this.left = nil;
+    this.right = nil;
+    this.color = Color.BLACK;
   }
 
   public T getKey() {
     return key;
-  }
-
-  public void setKey(T key) {
-    this.key = key;
   }
 
   public RedBlackTreeNode<T> getLeft() {
