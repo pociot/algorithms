@@ -1,22 +1,29 @@
 package com.pociot.structures.trees.rbtree;
 
+import com.pociot.structures.trees.Tree;
 import com.pociot.structures.trees.rbtree.RedBlackTreeNode.Color;
 
-public class RedBlackTree<T extends Comparable<? super T>> {
+public class RedBlackTree<K extends Comparable<? super K>, V> extends Tree<K, V> {
 
-  private final RedBlackTreeNode<T> nil = new RedBlackTreeNode<>(null, null, null);
-  RedBlackTreeNode<T> root = nil;
+  private final RedBlackTreeNode<K, V> nil = new RedBlackTreeNode<>(null, null, null, null);
 
+  public RedBlackTree() {
+    setRoot(nil);
+  }
 
-  void leftRotate(RedBlackTreeNode<T> x) {
-    RedBlackTreeNode<T> y = x.getRight();
+  protected RedBlackTreeNode<K, V> getRoot() {
+    return (RedBlackTreeNode<K, V>) super.getRoot();
+  }
+
+  void leftRotate(RedBlackTreeNode<K, V> x) {
+    RedBlackTreeNode<K, V> y = x.getRight();
     x.setRight(y.getLeft());
     if (y.getLeft() != this.nil) {
       y.getLeft().setParent(x);
     }
     y.setParent(x.getParent());
     if (x.getParent() == this.nil) {
-      this.root = y;
+      setRoot(y);
     } else if (x == x.getParent().getLeft()) {
       //noinspection SuspiciousNameCombination
       x.getParent().setLeft(y);
@@ -28,15 +35,15 @@ public class RedBlackTree<T extends Comparable<? super T>> {
     x.setParent(y);
   }
 
-  void rightRotate(RedBlackTreeNode<T> x) {
-    RedBlackTreeNode<T> y = x.getLeft();
+  void rightRotate(RedBlackTreeNode<K, V> x) {
+    RedBlackTreeNode<K, V> y = x.getLeft();
     x.setLeft(y.getRight());
     if (y.getRight() != this.nil) {
       y.getRight().setParent(x);
     }
     y.setParent(x.getParent());
     if (x.getParent() == this.nil) {
-      this.root = y;
+      setRoot(y);
     } else if (x == x.getParent().getRight()) {
       //noinspection SuspiciousNameCombination
       x.getParent().setRight(y);
@@ -48,13 +55,14 @@ public class RedBlackTree<T extends Comparable<? super T>> {
     x.setParent(y);
   }
 
-  void insert(T key) {
-    rbInsert(new RedBlackTreeNode<>(key, null, this.nil));
+  @Override
+  public void insert(K key, V value) {
+    rbInsert(new RedBlackTreeNode<>(key, value, null, this.nil));
   }
 
-  void rbInsert(RedBlackTreeNode<T> z) {
-    RedBlackTreeNode<T> y = this.nil;
-    RedBlackTreeNode<T> x = this.root;
+  void rbInsert(RedBlackTreeNode<K, V> z) {
+    RedBlackTreeNode<K, V> y = this.nil;
+    RedBlackTreeNode<K, V> x = getRoot();
     while (x != this.nil) {
       //noinspection SuspiciousNameCombination
       y = x;
@@ -66,7 +74,7 @@ public class RedBlackTree<T extends Comparable<? super T>> {
     }
     z.setParent(y);
     if (y == this.nil) {
-      this.root = z;
+      setRoot(z);
     } else if (z.getKey().compareTo(y.getKey()) < 0) {
       y.setLeft(z);
     } else {
@@ -78,7 +86,7 @@ public class RedBlackTree<T extends Comparable<? super T>> {
     rbInsertFixup(z);
   }
 
-  void rbInsertFixup(RedBlackTreeNode<T> z) {
+  void rbInsertFixup(RedBlackTreeNode<K, V> z) {
     while (z.getParent().getColor() == Color.RED) {
       if (z.getParent() == z.getParent().getParent().getLeft()) {
         z = leftSideFixup(z);
@@ -86,11 +94,11 @@ public class RedBlackTree<T extends Comparable<? super T>> {
         z = rightSideFixup(z);
       }
     }
-    root.setColor(Color.BLACK);
+    getRoot().setColor(Color.BLACK);
   }
 
-  private RedBlackTreeNode<T> rightSideFixup(RedBlackTreeNode<T> z) {
-    RedBlackTreeNode<T> y = z.getParent().getParent().getLeft();
+  private RedBlackTreeNode<K, V> rightSideFixup(RedBlackTreeNode<K, V> z) {
+    RedBlackTreeNode<K, V> y = z.getParent().getParent().getLeft();
     if (y.getColor() == Color.RED) {
       updateColors(z, y);
       z = z.getParent().getParent();
@@ -106,8 +114,8 @@ public class RedBlackTree<T extends Comparable<? super T>> {
     return z;
   }
 
-  private RedBlackTreeNode<T> leftSideFixup(RedBlackTreeNode<T> z) {
-    RedBlackTreeNode<T> y = z.getParent().getParent().getRight();
+  private RedBlackTreeNode<K, V> leftSideFixup(RedBlackTreeNode<K, V> z) {
+    RedBlackTreeNode<K, V> y = z.getParent().getParent().getRight();
     if (y.getColor() == Color.RED) {
       updateColors(z, y);
       z = z.getParent().getParent();
@@ -123,9 +131,9 @@ public class RedBlackTree<T extends Comparable<? super T>> {
     return z;
   }
 
-  void rbTransplant(RedBlackTreeNode<T> u, RedBlackTreeNode<T> v) {
+  void rbTransplant(RedBlackTreeNode<K, V> u, RedBlackTreeNode<K, V> v) {
     if (u.getParent() == this.nil) {
-      root = v;
+      setRoot(v);
     } else if (u == u.getParent().getLeft()) {
       u.getParent().setLeft(v);
     } else {
@@ -134,16 +142,16 @@ public class RedBlackTree<T extends Comparable<? super T>> {
     v.setParent(u.getParent());
   }
 
-  RedBlackTreeNode<T> treeMinimum(RedBlackTreeNode<T> x) {
+  RedBlackTreeNode<K, V> treeMinimum(RedBlackTreeNode<K, V> x) {
     while (x.getLeft() != this.nil) {
       x = x.getLeft();
     }
     return x;
   }
 
-  void rbDelete(RedBlackTreeNode<T> z) {
-    RedBlackTreeNode<T> y = z;
-    RedBlackTreeNode<T> x;
+  void rbDelete(RedBlackTreeNode<K, V> z) {
+    RedBlackTreeNode<K, V> y = z;
+    RedBlackTreeNode<K, V> x;
     Color yOriginalColor = y.getColor();
 
     if (z.getLeft() == this.nil) {
@@ -173,8 +181,8 @@ public class RedBlackTree<T extends Comparable<? super T>> {
     }
   }
 
-  void rbDeleteFixup(RedBlackTreeNode<T> x) {
-    while (x != this.root && x.getColor() == Color.BLACK) {
+  void rbDeleteFixup(RedBlackTreeNode<K, V> x) {
+    while (x != getRoot() && x.getColor() == Color.BLACK) {
       if (x == x.getParent().getLeft()) {
         x = leftSideDeleteFixup(x);
       } else {
@@ -184,8 +192,8 @@ public class RedBlackTree<T extends Comparable<? super T>> {
     x.setColor(Color.BLACK);
   }
 
-  private RedBlackTreeNode<T> rightSideDeleteFixup(RedBlackTreeNode<T> x) {
-    RedBlackTreeNode<T> w = x.getParent().getLeft();
+  private RedBlackTreeNode<K, V> rightSideDeleteFixup(RedBlackTreeNode<K, V> x) {
+    RedBlackTreeNode<K, V> w = x.getParent().getLeft();
     if (w.getColor() == Color.RED) {
       w.setColor(Color.BLACK);
       x.getParent().setColor(Color.RED);
@@ -206,13 +214,13 @@ public class RedBlackTree<T extends Comparable<? super T>> {
       x.getParent().setColor(Color.BLACK);
       w.getLeft().setColor(Color.BLACK);
       rightRotate(x.getParent());
-      x = this.root;
+      x = getRoot();
     }
     return x;
   }
 
-  private RedBlackTreeNode<T> leftSideDeleteFixup(RedBlackTreeNode<T> x) {
-    RedBlackTreeNode<T> w = x.getParent().getRight();
+  private RedBlackTreeNode<K, V> leftSideDeleteFixup(RedBlackTreeNode<K, V> x) {
+    RedBlackTreeNode<K, V> w = x.getParent().getRight();
     if (w.getColor() == Color.RED) {
       w.setColor(Color.BLACK);
       x.getParent().setColor(Color.RED);
@@ -233,12 +241,12 @@ public class RedBlackTree<T extends Comparable<? super T>> {
       x.getParent().setColor(Color.BLACK);
       w.getRight().setColor(Color.BLACK);
       leftRotate(x.getParent());
-      x = this.root;
+      x = getRoot();
     }
     return x;
   }
 
-  RedBlackTreeNode<T> iterativeTreeSearch(RedBlackTreeNode<T> x, T k) {
+  RedBlackTreeNode<K, V> iterativeTreeSearch(RedBlackTreeNode<K, V> x, K k) {
     while (x != this.nil && k.compareTo(x.getKey()) != 0) {
       if (k.compareTo(x.getKey()) < 0) {
         x = x.getLeft();
@@ -249,17 +257,23 @@ public class RedBlackTree<T extends Comparable<? super T>> {
     return x;
   }
 
-  public RedBlackTreeNode<T> search(T key) {
-    return iterativeTreeSearch(this.root, key);
+  public RedBlackTreeNode<K, V> searchNode(K key) {
+    return iterativeTreeSearch(getRoot(), key);
   }
 
-  public void delete(T key) {
-    rbDelete(search(key));
+  @Override
+  public void delete(K key) {
+    rbDelete(searchNode(key));
   }
 
-  private void updateColors(RedBlackTreeNode<T> z, RedBlackTreeNode<T> y) {
+  private void updateColors(RedBlackTreeNode<K, V> z, RedBlackTreeNode<K, V> y) {
     z.getParent().setColor(Color.BLACK);
     y.setColor(Color.BLACK);
     z.getParent().getParent().setColor(Color.RED);
+  }
+
+  @Override
+  public V search(K key) {
+    return searchNode(key).getValue();
   }
 }

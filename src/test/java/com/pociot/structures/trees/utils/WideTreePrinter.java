@@ -1,16 +1,16 @@
 package com.pociot.structures.trees.utils;
 
-import com.pociot.structures.trees.rbtree.RedBlackTreeNode;
+import com.pociot.structures.trees.Tree;
 import java.util.ArrayList;
 import java.util.List;
 
 public class WideTreePrinter {
 
-  public static <T extends Comparable<? super T>> void print(RedBlackTreeNode<T> root) {
+  public static <K extends Comparable<? super K>, V> void print(Tree.TreeNode<K, V> root) {
     List<List<String>> lines = new ArrayList<>();
 
-    List<RedBlackTreeNode<T>> level = new ArrayList<>();
-    List<RedBlackTreeNode<T>> next = new ArrayList<>();
+    List<Tree.TreeNode<K, V>> level = new ArrayList<>();
+    List<Tree.TreeNode<K, V>> next = new ArrayList<>();
 
     level.add(root);
     int nn = 1;
@@ -22,14 +22,14 @@ public class WideTreePrinter {
 
       nn = 0;
 
-      for (RedBlackTreeNode<T> n : level) {
+      for (Tree.TreeNode<K, V> n : level) {
         if (n == null) {
           line.add(null);
 
           next.add(null);
           next.add(null);
         } else {
-          String aa = n.getKey() == null ? "nil" : n.getKey().toString();
+          String aa = n.getKey() == null ? "nil" : n.getKey().toString() + ":" + n.getValue();
           line.add(aa);
           if (aa.length() > widest) {
             widest = aa.length();
@@ -53,7 +53,7 @@ public class WideTreePrinter {
 
       lines.add(line);
 
-      List<RedBlackTreeNode<T>> tmp = level;
+      List<Tree.TreeNode<K, V>> tmp = level;
       level = next;
       next = tmp;
       next.clear();
