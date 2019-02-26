@@ -11,6 +11,7 @@ public class RedBlackTree<K extends Comparable<? super K>, V> extends Tree<K, V>
     setRoot(nil);
   }
 
+  @Override
   protected RedBlackTreeNode<K, V> getRoot() {
     return (RedBlackTreeNode<K, V>) super.getRoot();
   }

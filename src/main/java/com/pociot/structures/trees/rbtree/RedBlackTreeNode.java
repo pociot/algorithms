@@ -14,10 +14,12 @@ public class RedBlackTreeNode<K, V> extends Tree.TreeNode<K, V> {
     this.color = Color.BLACK;
   }
 
+  @Override
   public RedBlackTreeNode<K, V> getLeft() {
     return (RedBlackTreeNode<K, V>) super.getLeft();
   }
 
+  @Override
   public RedBlackTreeNode<K, V> getRight() {
     return (RedBlackTreeNode<K, V>) super.getRight();
   }
