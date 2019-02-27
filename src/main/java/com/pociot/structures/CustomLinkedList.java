@@ -12,17 +12,17 @@ public class CustomLinkedList<T> {
   }
 
   public void push(T object) {
-    Link<T> link = new Link<>(object);
+    var link = new Link<>(object);
     link.setNext(head);
     head = link;
   }
 
   public void append(T object) {
-    Link<T> link = new Link<>(object);
+    var link = new Link<>(object);
     if (head == null) {
       head = link;
     } else {
-      Link<T> last = head;
+      var last = head;
       while (last.getNext() != null)
         last = last.getNext();
       last.setNext(link);
@@ -33,13 +33,13 @@ public class CustomLinkedList<T> {
     if (previousNode == null) {
       throw new IllegalArgumentException("Previous node cannot be null");
     }
-    Link<T> link = new Link<>(object);
+    var link = new Link<>(object);
     link.setNext(previousNode.next);
     previousNode.setNext(link);
   }
 
   public Link<T> delete() {
-    Link<T> temp = head;
+    var temp = head;
     if(head == null){
       return null;
     }
@@ -48,7 +48,7 @@ public class CustomLinkedList<T> {
   }
 
   public Link<T> search(T key) {
-    Link<T> temp = head;
+    var temp = head;
     while (temp != null && !temp.getValue().equals(key)) {
       temp = temp.getNext();
     }

@@ -48,7 +48,7 @@ public class RedBlackTree<K extends Comparable<? super K>, V> extends AbstractTr
   }
 
   private void leftRotate(RedBlackTreeNode<K, V> x) {
-    RedBlackTreeNode<K, V> y = x.getRight();
+    var y = x.getRight();
     x.setRight(y.getLeft());
     if (y.getLeft() != this.nil) {
       y.getLeft().setParent(x);
@@ -59,7 +59,7 @@ public class RedBlackTree<K extends Comparable<? super K>, V> extends AbstractTr
   }
 
   private void rightRotate(RedBlackTreeNode<K, V> x) {
-    RedBlackTreeNode<K, V> y = x.getLeft();
+    var y = x.getLeft();
     x.setLeft(y.getRight());
     if (y.getRight() != this.nil) {
       y.getRight().setParent(x);
@@ -79,8 +79,8 @@ public class RedBlackTree<K extends Comparable<? super K>, V> extends AbstractTr
   }
 
   private void rbInsert(RedBlackTreeNode<K, V> z) {
-    RedBlackTreeNode<K, V> y = this.nil;
-    RedBlackTreeNode<K, V> x = getRoot();
+    var y = this.nil;
+    var x = getRoot();
     while (x != this.nil) {
       //noinspection SuspiciousNameCombination
       y = x;
@@ -116,7 +116,7 @@ public class RedBlackTree<K extends Comparable<? super K>, V> extends AbstractTr
   }
 
   private RedBlackTreeNode<K, V> rightSideFixup(RedBlackTreeNode<K, V> z) {
-    RedBlackTreeNode<K, V> y = z.getParent().getParent().getLeft();
+    var y = z.getParent().getParent().getLeft();
     if (y.getColor() == Color.RED) {
       updateColors(z, y);
       z = z.getParent().getParent();
@@ -133,7 +133,7 @@ public class RedBlackTree<K extends Comparable<? super K>, V> extends AbstractTr
   }
 
   private RedBlackTreeNode<K, V> leftSideFixup(RedBlackTreeNode<K, V> z) {
-    RedBlackTreeNode<K, V> y = z.getParent().getParent().getRight();
+    var y = z.getParent().getParent().getRight();
     if (y.getColor() == Color.RED) {
       updateColors(z, y);
       z = z.getParent().getParent();
@@ -161,9 +161,9 @@ public class RedBlackTree<K extends Comparable<? super K>, V> extends AbstractTr
   }
 
   private void rbDelete(RedBlackTreeNode<K, V> z) {
-    RedBlackTreeNode<K, V> y = z;
     RedBlackTreeNode<K, V> x;
-    Color yOriginalColor = y.getColor();
+    var y = z;
+    var yOriginalColor = y.getColor();
 
     if (z.getLeft() == this.nil) {
       x = z.getRight();
@@ -204,7 +204,7 @@ public class RedBlackTree<K extends Comparable<? super K>, V> extends AbstractTr
   }
 
   private RedBlackTreeNode<K, V> rightSideDeleteFixup(RedBlackTreeNode<K, V> x) {
-    RedBlackTreeNode<K, V> w = x.getParent().getLeft();
+    var w = x.getParent().getLeft();
     if (w.getColor() == Color.RED) {
       w.setColor(Color.BLACK);
       x.getParent().setColor(Color.RED);
@@ -231,7 +231,7 @@ public class RedBlackTree<K extends Comparable<? super K>, V> extends AbstractTr
   }
 
   private RedBlackTreeNode<K, V> leftSideDeleteFixup(RedBlackTreeNode<K, V> x) {
-    RedBlackTreeNode<K, V> w = x.getParent().getRight();
+    var w = x.getParent().getRight();
     if (w.getColor() == Color.RED) {
       w.setColor(Color.BLACK);
       x.getParent().setColor(Color.RED);

@@ -29,7 +29,7 @@ public class CustomHashTable<K, V> {
 
   private void putVal(int hash, K key, V value) {
     Node<K, V> existing;
-    Node<K, V> newNode = new Node<>(hash, key, value, null);
+    var newNode = new Node<>(hash, key, value, null);
     if ((existing = table[(table.length - 1) & hash]) == null) {
       table[(table.length - 1) & hash] = newNode;
     } else {
@@ -43,7 +43,7 @@ public class CustomHashTable<K, V> {
   }
 
   private Node<K, V> getNode(int hash, K key) {
-    Node<K, V> firstNode = table[(table.length - 1) & hash];
+    var firstNode = table[(table.length - 1) & hash];
     if (firstNode != null) {
       if (firstNode.getKey().equals(key)) {
         return firstNode;
@@ -65,13 +65,13 @@ public class CustomHashTable<K, V> {
   }
 
   private void resize() {
-    Node<K, V>[] oldTab = table;
+    var oldTab = table;
 
     int oldCapacity = table == null ? 0 : table.length;
     int newLength = oldCapacity == 0 ? 16 : table.length * 2;
 
     @SuppressWarnings({"rawtypes", "unchecked"})
-    Node<K, V>[] newTab = (Node<K, V>[]) new Node[newLength];
+    var newTab = (Node<K, V>[]) new Node[newLength];
     table = newTab;
 
     recreateTable(oldTab, oldCapacity, newTab);

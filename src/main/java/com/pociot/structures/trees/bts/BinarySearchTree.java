@@ -11,7 +11,7 @@ public class BinarySearchTree<K extends Comparable<? super K>, V> extends Abstra
 
   @Override
   public void insert(K key, V value) {
-    treeInsert(new SimpleTreeNode<K, V>(key, value, null, null, null));
+    treeInsert(new SimpleTreeNode<>(key, value, null, null, null));
   }
 
   @Override
@@ -73,7 +73,7 @@ public class BinarySearchTree<K extends Comparable<? super K>, V> extends Abstra
     } else if (z.getRight() == null) {
       transplant(z, z.getLeft());
     } else {
-      TreeNode<K, V> y = treeMinimum(z.getRight());
+      var y = treeMinimum(z.getRight());
       if (y.getParent() != z) {
         transplant(y, y.getRight());
         y.setRight(z.getRight());
