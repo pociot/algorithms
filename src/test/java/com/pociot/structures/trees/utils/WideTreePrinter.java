@@ -1,16 +1,16 @@
 package com.pociot.structures.trees.utils;
 
-import com.pociot.structures.trees.Tree;
+import com.pociot.structures.trees.AbstractTree;
 import java.util.ArrayList;
 import java.util.List;
 
 public class WideTreePrinter {
 
-  public static <K extends Comparable<? super K>, V> void print(Tree.TreeNode<K, V> root) {
+  public static <K extends Comparable<? super K>, V> void print(AbstractTree.TreeNode<K, V> root) {
     List<List<String>> lines = new ArrayList<>();
 
-    List<Tree.TreeNode<K, V>> level = new ArrayList<>();
-    List<Tree.TreeNode<K, V>> next = new ArrayList<>();
+    List<AbstractTree.TreeNode<K, V>> level = new ArrayList<>();
+    List<AbstractTree.TreeNode<K, V>> next = new ArrayList<>();
 
     level.add(root);
     int nn = 1;
@@ -22,7 +22,7 @@ public class WideTreePrinter {
 
       nn = 0;
 
-      for (Tree.TreeNode<K, V> n : level) {
+      for (AbstractTree.TreeNode<K, V> n : level) {
         if (n == null) {
           line.add(null);
 
@@ -53,7 +53,7 @@ public class WideTreePrinter {
 
       lines.add(line);
 
-      List<Tree.TreeNode<K, V>> tmp = level;
+      List<AbstractTree.TreeNode<K, V>> tmp = level;
       level = next;
       next = tmp;
       next.clear();

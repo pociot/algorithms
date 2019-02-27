@@ -1,64 +1,35 @@
 package com.pociot.structures.trees;
 
-public abstract class Tree<K extends Comparable<? super K>, V> {
+public interface Tree<K extends Comparable<? super K>, V> {
 
-  private TreeNode<K, V> root;
+  void insert(K key, V value);
 
-  public abstract void insert(K key, V value);
+  void delete(K key);
 
-  public abstract void delete(K key);
+  V search(K key);
 
-  public abstract V search(K key);
+  String printInOrder();
 
-  protected TreeNode<K, V> getRoot() {
-    return root;
-  }
+  String printInOrder(boolean printValue);
 
-  protected void setRoot(TreeNode<K, V> root) {
-    this.root = root;
-  }
+  interface TreeNode<K, V> {
 
-  public static class TreeNode<K, V> {
+    K getKey();
 
-    private final K key;
-    private V value;
-    private TreeNode<K, V> left;
-    private TreeNode<K, V> right;
+    V getValue();
 
-    public TreeNode(K key, V value, TreeNode<K, V> left,
-        TreeNode<K, V> right) {
-      this.key = key;
-      this.value = value;
-      this.left = left;
-      this.right = right;
-    }
+    void setValue(V value);
 
-    public K getKey() {
-      return key;
-    }
+    TreeNode<K, V> getParent();
 
-    public V getValue() {
-      return value;
-    }
+    void setParent(TreeNode<K, V> parent);
 
-    public void setValue(V value) {
-      this.value = value;
-    }
+    TreeNode<K, V> getLeft();
 
-    public TreeNode<K, V> getLeft() {
-      return left;
-    }
+    void setLeft(TreeNode<K, V> left);
 
-    public void setLeft(TreeNode<K, V> left) {
-      this.left = left;
-    }
+    TreeNode<K, V> getRight();
 
-    public TreeNode<K, V> getRight() {
-      return right;
-    }
-
-    public void setRight(TreeNode<K, V> right) {
-      this.right = right;
-    }
+    void setRight(TreeNode<K, V> right);
   }
 }

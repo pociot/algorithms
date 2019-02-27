@@ -1,9 +1,9 @@
 package com.pociot.structures.trees.rbtree;
 
-import com.pociot.structures.trees.Tree;
+import com.pociot.structures.trees.AbstractTree;
 import com.pociot.structures.trees.rbtree.RedBlackTreeNode.Color;
 
-public class RedBlackTree<K extends Comparable<? super K>, V> extends Tree<K, V> {
+public class RedBlackTree<K extends Comparable<? super K>, V> extends AbstractTree<K, V> {
 
   private final RedBlackTreeNode<K, V> nil = new RedBlackTreeNode<>(null, null, null, null);
 
@@ -12,31 +12,53 @@ public class RedBlackTree<K extends Comparable<? super K>, V> extends Tree<K, V>
   }
 
   @Override
+  public RedBlackTreeNode<K, V> searchNode(K key) {
+    return iterativeTreeSearch(getRoot(), key);
+  }
+
+  @Override
+  public void delete(K key) {
+    RedBlackTreeNode<K, V> node = searchNode(key);
+    if (node != null) {
+      rbDelete(node);
+    }
+  }
+
+  @Override
+  public V search(K key) {
+    return searchNode(key).getValue();
+  }
+
+  @Override
+  public void insert(K key, V value) {
+    if (key == null) {
+      throw new IllegalArgumentException("Key cannot be null");
+    }
+    rbInsert(new RedBlackTreeNode<>(key, value, null, this.nil));
+  }
+
+  @Override
   protected RedBlackTreeNode<K, V> getRoot() {
     return (RedBlackTreeNode<K, V>) super.getRoot();
   }
 
-  void leftRotate(RedBlackTreeNode<K, V> x) {
+  @Override
+  protected RedBlackTreeNode<K, V> treeMinimum(TreeNode<K, V> x) {
+    return (RedBlackTreeNode<K, V>) super.treeMinimum(x);
+  }
+
+  private void leftRotate(RedBlackTreeNode<K, V> x) {
     RedBlackTreeNode<K, V> y = x.getRight();
     x.setRight(y.getLeft());
     if (y.getLeft() != this.nil) {
       y.getLeft().setParent(x);
     }
-    y.setParent(x.getParent());
-    if (x.getParent() == this.nil) {
-      setRoot(y);
-    } else if (x == x.getParent().getLeft()) {
-      //noinspection SuspiciousNameCombination
-      x.getParent().setLeft(y);
-    } else {
-      //noinspection SuspiciousNameCombination
-      x.getParent().setRight(y);
-    }
+    rbTransplant(x, y);
     y.setLeft(x);
     x.setParent(y);
   }
 
-  void rightRotate(RedBlackTreeNode<K, V> x) {
+  private void rightRotate(RedBlackTreeNode<K, V> x) {
     RedBlackTreeNode<K, V> y = x.getLeft();
     x.setLeft(y.getRight());
     if (y.getRight() != this.nil) {
@@ -56,12 +78,7 @@ public class RedBlackTree<K extends Comparable<? super K>, V> extends Tree<K, V>
     x.setParent(y);
   }
 
-  @Override
-  public void insert(K key, V value) {
-    rbInsert(new RedBlackTreeNode<>(key, value, null, this.nil));
-  }
-
-  void rbInsert(RedBlackTreeNode<K, V> z) {
+  private void rbInsert(RedBlackTreeNode<K, V> z) {
     RedBlackTreeNode<K, V> y = this.nil;
     RedBlackTreeNode<K, V> x = getRoot();
     while (x != this.nil) {
@@ -87,7 +104,7 @@ public class RedBlackTree<K extends Comparable<? super K>, V> extends Tree<K, V>
     rbInsertFixup(z);
   }
 
-  void rbInsertFixup(RedBlackTreeNode<K, V> z) {
+  private void rbInsertFixup(RedBlackTreeNode<K, V> z) {
     while (z.getParent().getColor() == Color.RED) {
       if (z.getParent() == z.getParent().getParent().getLeft()) {
         z = leftSideFixup(z);
@@ -132,7 +149,7 @@ public class RedBlackTree<K extends Comparable<? super K>, V> extends Tree<K, V>
     return z;
   }
 
-  void rbTransplant(RedBlackTreeNode<K, V> u, RedBlackTreeNode<K, V> v) {
+  private void rbTransplant(RedBlackTreeNode<K, V> u, RedBlackTreeNode<K, V> v) {
     if (u.getParent() == this.nil) {
       setRoot(v);
     } else if (u == u.getParent().getLeft()) {
@@ -143,14 +160,7 @@ public class RedBlackTree<K extends Comparable<? super K>, V> extends Tree<K, V>
     v.setParent(u.getParent());
   }
 
-  RedBlackTreeNode<K, V> treeMinimum(RedBlackTreeNode<K, V> x) {
-    while (x.getLeft() != this.nil) {
-      x = x.getLeft();
-    }
-    return x;
-  }
-
-  void rbDelete(RedBlackTreeNode<K, V> z) {
+  private void rbDelete(RedBlackTreeNode<K, V> z) {
     RedBlackTreeNode<K, V> y = z;
     RedBlackTreeNode<K, V> x;
     Color yOriginalColor = y.getColor();
@@ -182,7 +192,7 @@ public class RedBlackTree<K extends Comparable<? super K>, V> extends Tree<K, V>
     }
   }
 
-  void rbDeleteFixup(RedBlackTreeNode<K, V> x) {
+  private void rbDeleteFixup(RedBlackTreeNode<K, V> x) {
     while (x != getRoot() && x.getColor() == Color.BLACK) {
       if (x == x.getParent().getLeft()) {
         x = leftSideDeleteFixup(x);
@@ -247,7 +257,7 @@ public class RedBlackTree<K extends Comparable<? super K>, V> extends Tree<K, V>
     return x;
   }
 
-  RedBlackTreeNode<K, V> iterativeTreeSearch(RedBlackTreeNode<K, V> x, K k) {
+  private RedBlackTreeNode<K, V> iterativeTreeSearch(RedBlackTreeNode<K, V> x, K k) {
     while (x != this.nil && k.compareTo(x.getKey()) != 0) {
       if (k.compareTo(x.getKey()) < 0) {
         x = x.getLeft();
@@ -258,23 +268,9 @@ public class RedBlackTree<K extends Comparable<? super K>, V> extends Tree<K, V>
     return x;
   }
 
-  public RedBlackTreeNode<K, V> searchNode(K key) {
-    return iterativeTreeSearch(getRoot(), key);
-  }
-
-  @Override
-  public void delete(K key) {
-    rbDelete(searchNode(key));
-  }
-
   private void updateColors(RedBlackTreeNode<K, V> z, RedBlackTreeNode<K, V> y) {
     z.getParent().setColor(Color.BLACK);
     y.setColor(Color.BLACK);
     z.getParent().getParent().setColor(Color.RED);
-  }
-
-  @Override
-  public V search(K key) {
-    return searchNode(key).getValue();
   }
 }

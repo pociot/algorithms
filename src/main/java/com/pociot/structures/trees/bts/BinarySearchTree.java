@@ -1,105 +1,87 @@
 package com.pociot.structures.trees.bts;
 
-import com.pociot.structures.trees.TreeNode;
+import com.pociot.structures.trees.AbstractTree;
 
-public class BinarySearchTree<T extends Comparable<? super T>> {
+public class BinarySearchTree<K extends Comparable<? super K>, V> extends AbstractTree<K, V> {
 
-  private TreeNode<T> root;
 
   public BinarySearchTree() {
-    root = null;
+    setRoot(null);
   }
 
-  public void insert(T key) {
-    root = insertRecursive(key, root);
+  @Override
+  public void insert(K key, V value) {
+    treeInsert(new SimpleTreeNode<K, V>(key, value, null, null, null));
   }
 
-  private TreeNode<T> insertRecursive(T key, TreeNode<T> root) {
-    if (root == null) {
-      return new TreeNode<>(key);
+  @Override
+  public void delete(K key) {
+    TreeNode<K, V> node = searchNode(key);
+    if (node != null) {
+      treeDelete(node);
     }
-
-    if (key.compareTo(root.getKey()) < 0) {
-      root.setLeft(insertRecursive(key, root.getLeft()));
-    } else if (key.compareTo(root.getKey()) > 0) {
-      root.setRight(insertRecursive(key, root.getRight()));
-    }
-
-    return root;
   }
 
-  public void delete(T key) {
-    root = deleteRecursive(root, key);
+  @Override
+  public V search(K key) {
+    TreeNode<K, V> node;
+    return (node = searchNode(key)) == null ? null : node.getValue();
   }
 
-  private TreeNode<T> deleteRecursive(TreeNode<T> root, T key) {
-    if (root == null) {
-      return null;
-    }
+  @Override
+  protected SimpleTreeNode<K, V> getRoot() {
+    return (SimpleTreeNode<K, V>) super.getRoot();
+  }
 
-    if (key.compareTo(root.getKey()) < 0) {
-      root.setLeft(deleteRecursive(root.getLeft(), key));
-    } else if (key.compareTo(root.getKey()) > 0) {
-      root.setRight(deleteRecursive(root.getRight(), key));
-    } else {
-      if (root.getLeft() == null) {
-        return root.getRight();
-      } else if (root.getRight() == null) {
-        return root.getLeft();
+  private void treeInsert(TreeNode<K, V> z) {
+    TreeNode<K, V> y = null;
+    TreeNode<K, V> x = getRoot();
+    while (x != null) {
+      y = x;
+      if (z.getKey().compareTo(x.getKey()) < 0) {
+        x = x.getLeft();
+      } else {
+        x = x.getRight();
       }
-
-      root.setKey(minValue(root.getRight()));
-
-      root.setRight(deleteRecursive(root.getRight(), root.getKey()));
     }
-    return root;
-  }
-
-  private T minValue(TreeNode<T> root) {
-    T minv = root.getKey();
-    while (root.getLeft() != null) {
-      minv = root.getLeft().getKey();
-      root = root.getLeft();
-    }
-    return minv;
-  }
-
-  public String printInOrder() {
-    StringBuilder stringBuilder = new StringBuilder();
-    printInOrderRecursive(root, stringBuilder);
-    return stringBuilder.toString();
-  }
-
-  protected String print2DUtil() {
-    StringBuilder stringBuilder = new StringBuilder();
-    print2DUtil(root, 0, stringBuilder);
-    return stringBuilder.toString();
-  }
-
-  private void print2DUtil(TreeNode root, int space, StringBuilder stringBuilder) {
-    if (root == null) {
-      return;
-    }
-
-    space += 4;
-
-    print2DUtil(root.getRight(), space, stringBuilder);
-
-    stringBuilder.append("\n");
-    for (int i = 4; i < space; i++) {
-      stringBuilder.append(" ");
-    }
-    stringBuilder.append(root.getKey()).append("\n");
-
-    print2DUtil(root.getLeft(), space, stringBuilder);
-  }
-
-  private void printInOrderRecursive(TreeNode<T> root, StringBuilder stringBuilder) {
-    if (root != null) {
-      printInOrderRecursive(root.getLeft(), stringBuilder);
-      stringBuilder.append(root.getKey()).append(" ");
-      printInOrderRecursive(root.getRight(), stringBuilder);
+    z.setParent(y);
+    if (y == null) {
+      setRoot(z);
+    } else if (z.getKey().compareTo(y.getKey()) < 0) {
+      y.setLeft(z);
+    } else {
+      y.setRight(z);
     }
   }
 
+  private void transplant(TreeNode<K, V> u, TreeNode<K, V> v) {
+    if (u.getParent() == null) {
+      setRoot(v);
+    } else if (u == u.getParent().getLeft()) {
+      u.getParent().setLeft(v);
+    } else {
+      u.getParent().setRight(v);
+    }
+    if (v != null) {
+      v.setParent(u.getParent());
+    }
+  }
+
+  private void treeDelete(TreeNode<K, V> z) {
+    if (z.getLeft() == null) {
+      transplant(z, z.getRight());
+    } else if (z.getRight() == null) {
+      transplant(z, z.getLeft());
+    } else {
+      TreeNode<K, V> y = treeMinimum(z.getRight());
+      if (y.getParent() != z) {
+        transplant(y, y.getRight());
+        y.setRight(z.getRight());
+        y.getRight().setParent(y);
+      }
+      transplant(z, y);
+      y.setLeft(z.getLeft());
+      y.getLeft().setParent(y);
+    }
+  }
 }
