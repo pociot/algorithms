@@ -22,7 +22,7 @@ Data structures:
 
 Dynamic programming:
 - [x] Rod cut
-- [ ] Matrix multiplication
-- [ ] Matrix chain
+- [x] Matrix multiplication
+- [ ] Matrix chain multiplication
 - [ ] Longest common substring
 - [ ] Optimal binary search tree
