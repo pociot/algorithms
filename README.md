@@ -19,3 +19,10 @@ Data structures:
 - [x] Binary search tree
 - [x] Hash table 
 - [x] Red-black tree - missing meaningful tests
+
+Dynamic programming:
+- [x] Rod cut
+- [ ] Matrix multiplication
+- [ ] Matrix chain
+- [ ] Longest common substring
+- [ ] Optimal binary search tree
